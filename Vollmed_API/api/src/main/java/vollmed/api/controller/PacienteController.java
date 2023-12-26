@@ -7,30 +7,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import vollmed.api.models.medico.*;
-import vollmed.api.services.MedicoService;
+import vollmed.api.models.paciente.*;
+import vollmed.api.services.PacienteService;
 
 @RestController
-@RequestMapping("medicos")
-public class MedicoController {
+@RequestMapping("pacientes")
+public class PacienteController {
 
     @Autowired
-    private MedicoService service;
+    private PacienteService service;
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados) {
+    public void cadastrar(@RequestBody @Valid DadosCadastroPaciente dados) {
         service.create(dados);
     }
 
     @GetMapping
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public Page<DadosListagemPaciente> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return service.read(paginacao);
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoPaciente dados) {
         service.update(dados);
     }
 

@@ -1,4 +1,4 @@
-package vollmed.api.medico;
+package vollmed.api.models.medico;
 
 public record DadosListagemMedico(Long id, String nome, String email, String crm, Especialidade especialidade) {
 

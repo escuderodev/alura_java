@@ -1,4 +1,4 @@
-package vollmed.api.endereco;
+package vollmed.api.models.endereco;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package vollmed.api.medico;
+package vollmed.api.models.medico;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
