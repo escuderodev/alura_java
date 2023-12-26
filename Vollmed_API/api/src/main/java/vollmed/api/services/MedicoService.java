@@ -6,6 +6,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import vollmed.api.models.medico.*;
 
+import java.util.Optional;
+
 @Service
 public class MedicoService {
 
@@ -15,12 +17,17 @@ public class MedicoService {
         this.repository = repository;
     }
 
-    public void create(DadosCadastroMedico dados) {
-        repository.save(new Medico(dados));
+    public void create(Medico medico) {
+        repository.save(medico);
     }
 
-    public Page<DadosListagemMedico> read(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public Page<DadosListagemMedico> findAll(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
+    }
+
+    public Optional<Medico> findById(Long id) {
+        var medico = repository.findById(id);
+        return medico;
     }
 
     public void update(DadosAtualizacaoMedico dados) {

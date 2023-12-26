@@ -8,8 +8,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import vollmed.api.models.medico.*;
 import vollmed.api.services.MedicoService;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("medicos")
@@ -20,19 +23,31 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados) {
-        service.create(dados);
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder) {
+        var medico = new Medico(dados);
+        service.create(medico);
+        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
     @GetMapping
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        return service.read(paginacao);
+    public ResponseEntity<Page<DadosListagemMedico>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+        var page = service.findAll(paginacao);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Medico>> listarPorId(@PathVariable Long id) {
+        var medico = service.findById(id);
+        return ResponseEntity.ok(medico);
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+        var medico = service.findById(dados.id());
         service.update(dados);
+        return ResponseEntity.ok(medico);
     }
 
     @DeleteMapping("/{id}")
