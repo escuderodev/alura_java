@@ -27,5 +27,6 @@ public class Exceptions {
         public errorValidation(FieldError error) {
             this(error.getField(), error.getDefaultMessage());
         }
+
 }
 }
