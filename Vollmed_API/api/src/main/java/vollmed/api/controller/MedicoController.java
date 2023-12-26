@@ -40,6 +40,4 @@ public class MedicoController {
         var medico = repository.getReferenceById(id);
         medico.excluir();
     }
-
-
 }
