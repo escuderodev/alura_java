@@ -25,17 +25,19 @@ public class PacienteService {
         return repository.findAll(paginacao).map(DadosListagemPaciente::new);
     }
 
-    public Optional<Paciente> findById(Long id) {
-        var paciente = repository.findById(id);
+    public Paciente findById(Long id) {
+        var paciente = repository.getReferenceById(id);
         return paciente;
     }
 
     public void update(DadosAtualizacaoPaciente dados) {
-        var medico = repository.getReferenceById(dados.id());
-        medico.atualizarInformacoes(dados);
+        var paciente = repository.getReferenceById(dados.id());
+        paciente.atualizarInformacoes(dados);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        var paciente = repository.getReferenceById(id);
+        System.out.println(paciente);
+        repository.deleteById(paciente.getId());
     }
 }

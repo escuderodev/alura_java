@@ -25,8 +25,8 @@ public class MedicoService {
         return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
     }
 
-    public Optional<Medico> findById(Long id) {
-        var medico = repository.findById(id);
+    public Medico findById(Long id) {
+        var medico = repository.getReferenceById(id);
         return medico;
     }
 

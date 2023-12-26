@@ -37,7 +37,7 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Medico>> listarPorId(@PathVariable Long id) {
+    public ResponseEntity<Medico> listarPorId(@PathVariable Long id) {
         var medico = service.findById(id);
         return ResponseEntity.ok(medico);
     }
